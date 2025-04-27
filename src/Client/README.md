@@ -43,6 +43,18 @@ ng build
 ng lint
 ```
 
+### Check formatting
+
+```bash
+npm run format:check
+```
+
+### Fix formatting
+
+```bash
+npm run format:write
+```
+
 ### Run unit tests
 
 ```bash
