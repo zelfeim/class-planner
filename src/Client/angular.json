@@ -7,12 +7,13 @@
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
-                    "style": "scss"
+                    "style": "scss",
+                    "prefix": "cp"
                 }
             },
             "root": "",
             "sourceRoot": "src",
-            "prefix": "app",
+            "prefix": "cp",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:application",
@@ -86,11 +87,18 @@
                         "styles": ["src/styles.scss"],
                         "scripts": []
                     }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                    }
                 }
             }
         }
     },
     "cli": {
-        "analytics": "3947d845-ebc7-4047-9c90-d0c6291e2f1d"
+        "analytics": "3947d845-ebc7-4047-9c90-d0c6291e2f1d",
+        "schematicCollections": ["angular-eslint"]
     }
 }
