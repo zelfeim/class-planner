@@ -18,7 +18,7 @@ module.exports = tsEslint.config(
                 "error",
                 {
                     type: "attribute",
-                    prefix: "app",
+                    prefix: "cp",
                     style: "camelCase"
                 }
             ],
@@ -26,7 +26,7 @@ module.exports = tsEslint.config(
                 "error",
                 {
                     type: "element",
-                    prefix: "app",
+                    prefix: "cp",
                     style: "kebab-case"
                 }
             ]
