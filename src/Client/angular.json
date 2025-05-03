@@ -76,6 +76,8 @@
                     "options": {
                         "tsConfig": "tsconfig.spec.json",
                         "inlineStyleLanguage": "scss",
+                        "watch": false,
+                        "browsers": "ChromeHeadless",
                         "assets": [
                             {
                                 "glob": "**/*",
