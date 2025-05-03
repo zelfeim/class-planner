@@ -1,5 +1,4 @@
-import { Component, inject } from "@angular/core";
-import { AuthService } from "../../services/auth.service";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "cp-home",
@@ -7,6 +6,4 @@ import { AuthService } from "../../services/auth.service";
     templateUrl: "./home.component.html",
     styleUrl: "./home.component.scss"
 })
-export class HomeComponent {
-    protected readonly authService: AuthService = inject(AuthService);
-}
+export class HomeComponent {}
