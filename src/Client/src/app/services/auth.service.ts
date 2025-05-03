@@ -7,7 +7,7 @@ import { RoutePath } from "../enums/route-path";
 })
 export class AuthService {
     private readonly _router: Router = inject(Router);
-    private _isAuthenticated: WritableSignal<boolean> = signal(true);
+    private readonly _isAuthenticated: WritableSignal<boolean> = signal(true);
 
     public get isAuthenticated(): WritableSignal<boolean> {
         return this._isAuthenticated;
