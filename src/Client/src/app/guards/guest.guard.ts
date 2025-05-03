@@ -1,9 +1,9 @@
-import { ActivatedRouteSnapshot, CanActivateFn, RedirectCommand, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { CanActivateFn, RedirectCommand, Router, UrlTree } from "@angular/router";
 import { AuthService } from "../services/auth.service";
 import { inject } from "@angular/core";
 import { RoutePath } from "../enums/route-path";
 
-export const guestGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): true | RedirectCommand => {
+export const guestGuard: CanActivateFn = (): true | RedirectCommand => {
     const router: Router = inject(Router);
     const authService: AuthService = inject(AuthService);
 

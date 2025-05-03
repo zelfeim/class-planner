@@ -29,7 +29,8 @@ module.exports = tsEslint.config(
                     prefix: "cp",
                     style: "kebab-case"
                 }
-            ]
+            ],
+            "@typescript-eslint/no-inferrable-types": "off"
         }
     },
     {
