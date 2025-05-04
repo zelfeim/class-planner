@@ -11,7 +11,20 @@ export const routes: Routes = [
     },
     {
         path: RoutePath.HOME,
-        loadComponent: () => import("./routes/home/home.component").then((m) => m.HomeComponent),
+        loadComponent: () => import("./routes/home/home.component").then((m) => m.HomeComponent)
+    },
+    {
+        path: RoutePath.YEAR_GROUPS,
+        loadComponent: () => import("./routes/year-groups/year-groups.component").then((m) => m.YearGroupsComponent)
+    },
+    {
+        path: RoutePath.LECTURERS,
+        loadComponent: () => import("./routes/lecturers/lecturers.component").then((m) => m.LecturersComponent),
+        canActivate: [authenticatedGuard]
+    },
+    {
+        path: RoutePath.CLASSROOMS,
+        loadComponent: () => import("./routes/classrooms/classrooms.component").then((m) => m.ClassroomsComponent),
         canActivate: [authenticatedGuard]
     },
     {
