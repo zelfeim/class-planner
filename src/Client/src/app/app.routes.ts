@@ -13,5 +13,9 @@ export const routes: Routes = [
         path: RoutePath.HOME,
         loadComponent: () => import("./routes/home/home.component").then((m) => m.HomeComponent),
         canActivate: [authenticatedGuard]
+    },
+    {
+        path: "**",
+        redirectTo: RoutePath.HOME
     }
 ];

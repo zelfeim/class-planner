@@ -1,0 +1,50 @@
+.navigation {
+    --icon-size: 30px;
+    --width: 90px;
+
+    background: var(--surface);
+    margin-top: 60px;
+    padding: calc(var(--width) / 2) 0;
+    width: var(--width);
+    border-radius: calc(var(--width) / 2);
+
+    .navigation__links {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        .link {
+            position: relative;
+            text-align: center;
+            gap: 4px;
+            padding: 15px 0;
+
+            .link__icon {
+                font-size: var(--icon-size);
+                width: var(--icon-size);
+                height: var(--icon-size);
+            }
+
+            .link__name {
+                display: block;
+                font-size: 13px;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 0;
+                height: 0;
+                background: rgba(0, 0, 0, 0.05);
+                transition: 0.1s ease-out;
+            }
+
+            &:hover::after {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

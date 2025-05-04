@@ -1,4 +1,7 @@
 export enum RoutePath {
     LOGIN = "login",
-    HOME = ""
+    HOME = "",
+    LECTURERS = "lecturers",
+    CLASSROOMS = "classrooms",
+    YEAR_GROUPS = "year-groups"
 }
