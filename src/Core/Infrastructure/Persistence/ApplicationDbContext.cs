@@ -15,5 +15,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Course> Courses { get; set; }
     public DbSet<Class> Classes { get; set; }
     public DbSet<Event> Events { get; set; }
+    public DbSet<DayEvent> DayEvents { get; set; }
+    public DbSet<ClassEvent> ClassEvents { get; set; }
     public DbSet<Calendar> Calendars { get; set; }
+    public DbSet<Set> Sets { get; set; }
 }
