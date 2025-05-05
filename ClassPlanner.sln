@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassPlanner.Api", "src\ClassPlanner.Api\ClassPlanner.Api.csproj", "{E73E418C-1B0A-406B-8D9A-D06EC09A307E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{E73E418C-1B0A-406B-8D9A-D06EC09A307E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassPlanner.Core", "src\ClassPlanner.Core\ClassPlanner.Core.csproj", "{73E3C29E-DC58-4D1A-977B-D39A36E6B4D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{73E3C29E-DC58-4D1A-977B-D39A36E6B4D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassPlanner.Api.Tests", "tests\ClassPlanner.Api.Tests\ClassPlanner.Api.Tests.csproj", "{66E9EF8A-A852-4B1A-9B92-3DD2814A552A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Tests", "tests\Api.Tests\Api.Tests.csproj", "{66E9EF8A-A852-4B1A-9B92-3DD2814A552A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassPlanner.Core.Tests", "tests\ClassPlanner.Core.Tests\ClassPlanner.Core.Tests.csproj", "{2F2977F0-AD19-4BC9-BE16-4CC41CB716BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "tests\Core.Tests\Core.Tests.csproj", "{2F2977F0-AD19-4BC9-BE16-4CC41CB716BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
