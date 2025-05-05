@@ -1,6 +1,6 @@
 namespace Core.Domain.Entity;
 
-public record Student
+public class Student : Person
 {
-    public string Email { get; set; } 
+    public ICollection<Set> Sets { get; set; } = [];
 }

@@ -1,6 +1,6 @@
 namespace Core.Domain.Entity;
 
-public record Lecturer
+public class Lecturer : Person
 {
-    public string Email { get; set; } 
+    public Class? Class { get; set; }
 }
