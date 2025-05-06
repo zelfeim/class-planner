@@ -31,6 +31,10 @@ public class Endpoint(
             await SendNotFoundAsync(ct); 
         }
         
+        var classOccurence = new ClassEvent(calendar!, classInstance!, req.StartTime, req.EndTime);
+        
+        // Should these events be optimized?
+        // Idea to filter them by a timeslot (e.g., a week)
         var allEvents = dbContext.Events.Where(x => x.CalendarId == req.CalendarId);
         
         var dayEvents = allEvents.OfType<DayEvent>();
@@ -43,8 +47,10 @@ public class Endpoint(
         // Student availability validation ?
         // Classroom availability validation
         
+        // TODO: Move validation to a separate service so they can be reused while checking for possible timeslots
+        
         // Validate that class occurence does not overlap with another class occurence
-        if (classEvents.WhereOverlapping(req.StartTime, req.EndTime).Any())
+        if (classEvents.WhereOverlapping(classOccurence).Any())
         {
             logger.LogWarning("Class occurence overlaps with another class occurence");
             AddError("Class occurence overlaps with another class occurence"); 
@@ -52,7 +58,7 @@ public class Endpoint(
         
         // Validate that the lecturer does not have another class occurence at the same time
         var lecturerEvents = classEvents.Where(x => x.Class.Lecturer == classInstance!.Lecturer);;
-        if (lecturerEvents.WhereOverlapping(req.StartTime, req.EndTime).Any())
+        if (lecturerEvents.WhereOverlapping(classOccurence).Any())
         {
             logger.LogWarning("Lecturer has another class occurence at the same time");
             AddError("Lecturer has another class occurence at the same time");
@@ -60,14 +66,14 @@ public class Endpoint(
         
         // Validate that the classroom does not have another class occurence at the same time
         var classroomEvents = classEvents.Where(x => x.Class.Classroom == classInstance!.Classroom);
-        if (classroomEvents.WhereOverlapping(req.StartTime, req.EndTime).Any())
+        if (classroomEvents.WhereOverlapping(classOccurence).Any())
         {
             logger.LogWarning("Classroom has another class occurence at the same time"); 
             AddError("Classroom has another class occurence at the same time");
         }
 
         // Validate that day events do not overlap with class occurence
-        if (dayEvents.WhereOverlapping(req.StartTime, req.EndTime).Any())
+        if (dayEvents.WhereOverlapping(classOccurence).Any())
         {
             logger.LogWarning("Day events overlap with class occurence");
             AddError("Day events overlap with class occurence");
@@ -75,8 +81,6 @@ public class Endpoint(
         
         ThrowIfAnyErrors();
 
-        var classOccurence = new ClassEvent(calendar!, classInstance!, req.StartTime, req.EndTime);
-        
         dbContext.Events.Add(classOccurence);
         
         await SendAsync(classOccurence.Id, cancellation: ct);
@@ -85,11 +89,11 @@ public class Endpoint(
 
 public static class DateTimeOverlapExtensions
 {
-    public static IQueryable<Event> WhereOverlapping(this IQueryable<Event> query, DateTime start, DateTime end)
+    public static IQueryable<Event> WhereOverlapping(this IQueryable<Event> query, ClassEvent newEvent)
     {
         return query.Where(x =>
-            (x.StartTime <= start && start < x.EndTime) ||     // New event starts during existing
-            (x.StartTime < end && end <= x.EndTime) ||         // New event ends during existing
-            (start <= x.StartTime && x.EndTime <= end));       // New event completely contains existing
+            (x.StartTime <= newEvent.StartTime && newEvent.StartTime < x.EndTime) ||     // New event starts during existing
+            (x.StartTime < newEvent.EndTime && newEvent.EndTime <= x.EndTime) ||         // New event ends during existing
+            (newEvent.StartTime <= x.StartTime && x.EndTime <= newEvent.EndTime));       // New event completely contains existing
     }
 }
