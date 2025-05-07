@@ -1,4 +1,4 @@
-﻿namespace ClassPlanner.Api.Tests;
+﻿namespace Core.Tests;
 
 public class UnitTest1
 {
