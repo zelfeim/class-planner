@@ -13,13 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Calendar\Create\" />
-      <Folder Include="Features\Calendar\DeleteEvent\" />
-      <Folder Include="Features\Calendar\Delete\" />
       <Folder Include="Features\Calendar\GetEventCollisions\" />
-      <Folder Include="Features\Calendar\GetEvents\" />
-      <Folder Include="Features\Calendar\Get\" />
-      <Folder Include="Features\Calendar\MoveEvent\" />
       <Folder Include="Features\Class\Create\" />
       <Folder Include="Features\Event\" />
       <Folder Include="Infrastructure\Migrations\" />

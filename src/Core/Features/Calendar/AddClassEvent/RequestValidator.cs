@@ -30,11 +30,11 @@ public class RequestValidator : Validator<Request>
         RuleFor(x => new { x.StartTime, x.EndTime })
             .Must(x => x.EndTime - x.StartTime >= TimeSpan.FromMinutes(90))
             .WithMessage("Event duration must be at least 90 minutes")
-            .Must(x => x.EndTime - x.StartTime <= TimeSpan.FromHours(3))
-            .WithMessage("Event duration cannot exceed 3 hours");
+            .Must(x => x.EndTime - x.StartTime <= TimeSpan.FromHours(6))
+            .WithMessage("Event duration cannot exceed 6 hours");
 
         RuleFor(x => new { x.StartTime, x.EndTime })
-            .Must(x => x.StartTime.Minute % 45 == 0 && x.EndTime.Minute % 45 == 0)
+            .Must(x => x.StartTime.Minute % 15 == 0 && x.EndTime.Minute % 15 == 0)
             .WithMessage("Times must be rounded to 45-minute intervals");
     }
 }
