@@ -53,29 +53,15 @@ namespace Core.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sets",
+                name: "Years",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Discriminator = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Students",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Email = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_Years", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,9 +76,48 @@ namespace Core.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Calendars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Calendars_Sets_YearId",
+                        name: "FK_Calendars_Years_YearId",
                         column: x => x.YearId,
-                        principalTable: "Sets",
+                        principalTable: "Years",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    YearId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Groups_Years_YearId",
+                        column: x => x.YearId,
+                        principalTable: "Years",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    YearId = table.Column<int>(type: "integer", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Years_YearId",
+                        column: x => x.YearId,
+                        principalTable: "Years",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -126,37 +151,37 @@ namespace Core.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Classes_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Classes_Lecturers_LecturerId",
                         column: x => x.LecturerId,
                         principalTable: "Lecturers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Classes_Sets_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "Sets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SetStudent",
+                name: "GroupStudent",
                 columns: table => new
                 {
-                    SetsId = table.Column<int>(type: "integer", nullable: false),
+                    GroupsId = table.Column<int>(type: "integer", nullable: false),
                     StudentsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SetStudent", x => new { x.SetsId, x.StudentsId });
+                    table.PrimaryKey("PK_GroupStudent", x => new { x.GroupsId, x.StudentsId });
                     table.ForeignKey(
-                        name: "FK_SetStudent_Sets_SetsId",
-                        column: x => x.SetsId,
-                        principalTable: "Sets",
+                        name: "FK_GroupStudent_Groups_GroupsId",
+                        column: x => x.GroupsId,
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SetStudent_Students_StudentsId",
+                        name: "FK_GroupStudent_Students_StudentsId",
                         column: x => x.StudentsId,
                         principalTable: "Students",
                         principalColumn: "Id",
@@ -164,7 +189,7 @@ namespace Core.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Events",
+                name: "Event",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -177,15 +202,15 @@ namespace Core.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.PrimaryKey("PK_Event", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Events_Calendars_CalendarId",
+                        name: "FK_Event_Calendars_CalendarId",
                         column: x => x.CalendarId,
                         principalTable: "Calendars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Events_Classes_ClassId",
+                        name: "FK_Event_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
                         principalColumn: "Id",
@@ -221,29 +246,39 @@ namespace Core.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_CalendarId",
-                table: "Events",
+                name: "IX_Event_CalendarId",
+                table: "Event",
                 column: "CalendarId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_ClassId",
-                table: "Events",
+                name: "IX_Event_ClassId",
+                table: "Event",
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SetStudent_StudentsId",
-                table: "SetStudent",
+                name: "IX_Groups_YearId",
+                table: "Groups",
+                column: "YearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupStudent_StudentsId",
+                table: "GroupStudent",
                 column: "StudentsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_YearId",
+                table: "Students",
+                column: "YearId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "Event");
 
             migrationBuilder.DropTable(
-                name: "SetStudent");
+                name: "GroupStudent");
 
             migrationBuilder.DropTable(
                 name: "Calendars");
@@ -261,10 +296,13 @@ namespace Core.Infrastructure.Migrations
                 name: "Courses");
 
             migrationBuilder.DropTable(
+                name: "Groups");
+
+            migrationBuilder.DropTable(
                 name: "Lecturers");
 
             migrationBuilder.DropTable(
-                name: "Sets");
+                name: "Years");
         }
     }
 }
