@@ -83,7 +83,7 @@ public class CalendarService(
 
         #endregion
 
-        dbContext.Events.Add(newClassEvent);
+        dbContext.ClassEvents.Add(newClassEvent);
         
         return newClassEvent.Id;
     }
