@@ -110,7 +110,7 @@ public class CalendarService(
         await dbContext.SaveChangesAsync();
     }
     
-    private async Task ValidateCalendarCollisions(int calendarId, DateTime startTime, DateTime endTime, Lecturer lecturer, Classroom classroom)
+    private async Task ValidateCalendarCollisions(int calendarId, DateTime startTime, DateTime endTime, Domain.Entity.Lecturer lecturer, Domain.Entity.Classroom classroom)
     {
         var classCollisionTask = ValidateClassCollisionsAsync(calendarId, startTime, endTime);
         var specialDaysTask = ValidateSpecialDaysCollisionsAsync(calendarId, startTime, endTime);
@@ -146,7 +146,7 @@ public class CalendarService(
         }
     }
 
-    private async Task ValidateLecturerAvailabilityAsync(int calendarId, DateTime startTime, DateTime endTime, Lecturer lecturer)
+    private async Task ValidateLecturerAvailabilityAsync(int calendarId, DateTime startTime, DateTime endTime, Domain.Entity.Lecturer lecturer)
     {
         var events = await GetEventsAsync(calendarId);
         
@@ -161,7 +161,7 @@ public class CalendarService(
     }
 
     private async Task ValidateClassroomAvailabilityAsync(int calendarId, DateTime startTime, DateTime endTime,
-        Classroom classroom)
+        Domain.Entity.Classroom classroom)
     {
         var events = await GetEventsAsync(calendarId);
         
