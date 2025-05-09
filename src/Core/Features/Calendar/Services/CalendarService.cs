@@ -1,21 +1,24 @@
 using Core.Domain.Entity;
+using Core.Features.Calendar.Services.Interfaces;
 using Core.Infrastructure.Persistence;
 using FastEndpoints;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Features.Calendar.Services;
 
 public class CalendarService(
-    Logger<CalendarService> logger,
-    ApplicationDbContext dbContext,
-    ValidationContext validationContext
-    )
+    ILogger<CalendarService> logger,
+    ApplicationDbContext dbContext
+    ) : ICalendarService
 {
     // Should be independent of the application type
     
     public async Task<List<Event>> GetEventsAsync(int id)
     {
+        var validationContext = ValidationContext.Instance;
+            
         var calendar = await dbContext.Calendars.Include(calendar => calendar.Events).FirstOrDefaultAsync(x => x.Id == id);
 
         if (calendar == null)
@@ -31,6 +34,8 @@ public class CalendarService(
     // Idea to filter them by a timeslot (e.g., a week)
     public async Task<Event> GetEventAsync(int calendarId, int eventId)
     {
+        var validationContext = ValidationContext.Instance;
+        
         var events = await GetEventsAsync(calendarId); 
         
         var foundEvent = events.FirstOrDefault(x => x.Id == eventId);
@@ -49,6 +54,8 @@ public class CalendarService(
     // TODO: Event creation should be in event service
     public async Task<int> AddEventAsync(AddClassEvent.Request req, CancellationToken ct)
     {
+        var validationContext = ValidationContext.Instance;
+        
         var calendar = await dbContext.Calendars.FindAsync([req.CalendarId], cancellationToken: ct);
 
         #region EventCreation
@@ -97,6 +104,8 @@ public class CalendarService(
 
     public async Task MoveEventAsync(int calendarId, int eventId, DateTime newStartTime, DateTime newEndTime)
     {
+        var validationContext = ValidationContext.Instance;
+            
         var selectedEvent = await GetEventAsync(calendarId, eventId);
         
         await ValidateClassCollisionsAsync(calendarId, newStartTime, newEndTime);
@@ -124,6 +133,8 @@ public class CalendarService(
     // Such a validator should work in a calendar class context (e.g., we are inside a calendar for the 3rd year)
     private async Task ValidateClassCollisionsAsync(int calendarId, DateTime startTime, DateTime endTime)
     {
+        var validationContext = ValidationContext.Instance;
+            
         var events = await GetEventsAsync(calendarId);
         var classEvents = events.OfType<ClassEvent>().ToList();
         
@@ -136,6 +147,8 @@ public class CalendarService(
     
     private async Task ValidateSpecialDaysCollisionsAsync(int calendarId, DateTime startTime, DateTime endTime)
     {
+        var validationContext = ValidationContext.Instance;
+            
         var events = await GetEventsAsync(calendarId);
         var dayEvents = events.OfType<DayEvent>().ToList();
         
@@ -148,6 +161,8 @@ public class CalendarService(
 
     private async Task ValidateLecturerAvailabilityAsync(int calendarId, DateTime startTime, DateTime endTime, Domain.Entity.Lecturer lecturer)
     {
+        var validationContext = ValidationContext.Instance;
+            
         var events = await GetEventsAsync(calendarId);
         
         var classEvents = events.OfType<ClassEvent>().ToList();
@@ -163,6 +178,8 @@ public class CalendarService(
     private async Task ValidateClassroomAvailabilityAsync(int calendarId, DateTime startTime, DateTime endTime,
         Domain.Entity.Classroom classroom)
     {
+        var validationContext = ValidationContext.Instance;
+            
         var events = await GetEventsAsync(calendarId);
         
         var classEvents = events.OfType<ClassEvent>().ToList();
