@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Features.Classroom.Delete;
 
+[HttpDelete("/api/classroom/{id:int}")]
 public class DeleteClassroomEndpoint(ILogger<DeleteClassroomEndpoint> logger, ApplicationDbContext dbContext) : Endpoint<DeleteClassroomRequest>
 {
     public override async Task HandleAsync(DeleteClassroomRequest req, CancellationToken ct)

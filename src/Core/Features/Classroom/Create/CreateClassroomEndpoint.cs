@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Features.Classroom.Create;
 
+[HttpPost("/api/classroom/create")]
 public class CreateClassroomEndpoint(ILogger<CreateClassroomEndpoint> logger, ApplicationDbContext dbContext) : EndpointWithMapper<CreateClassroomRequest, CreateClassroomMapper>
 {
     public override async Task HandleAsync(CreateClassroomRequest req, CancellationToken ct)
