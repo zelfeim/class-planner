@@ -1,5 +1,6 @@
 using Core.Domain.Entity;
 using Core.Features.Calendar.Services;
+using Core.Features.Calendar.Services.Interfaces;
 using Core.Infrastructure.Persistence;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,8 @@ namespace Core.Features.Calendar.AddClassEvent;
 
 [HttpPost("api/calendar/{calendarId}/add-class/{classId}")]
 public class Endpoint(
-    Logger<Endpoint> logger,
-    CalendarService calendarService
+    ILogger<Endpoint> logger,
+    ICalendarService calendarService
     ) : Endpoint<Request, int>
 {
     public override async Task HandleAsync(Request req, CancellationToken ct)

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace Core.Features.Calendar.Create;
 
 [HttpPost("/api/calendar/create")]
-public class Endpoint(Logger<Endpoint> logger, ApplicationDbContext dbContext) : Endpoint<Request, int>
+public class Endpoint(ILogger<Endpoint> logger, ApplicationDbContext dbContext) : Endpoint<Request, int>
 {
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {

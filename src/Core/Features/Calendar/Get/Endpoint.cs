@@ -5,7 +5,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Features.Calendar.Get;
 
-public class Endpoint(Logger<Endpoint> logger, ApplicationDbContext dbContext) : EndpointWithoutRequest<List<Domain.Entity.Calendar>>
+[HttpGet("/api/calendar")]
+public class Endpoint(ILogger<Endpoint> logger, ApplicationDbContext dbContext) : EndpointWithoutRequest<List<Domain.Entity.Calendar>>
 {
     public override async Task HandleAsync(CancellationToken ct)
     {

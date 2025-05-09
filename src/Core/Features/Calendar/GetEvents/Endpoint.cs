@@ -1,4 +1,5 @@
 using Core.Features.Calendar.Services;
+using Core.Features.Calendar.Services.Interfaces;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace Core.Features.Calendar.GetEvents;
 
 [HttpGet("/api/calendar/{id:int}/events")]
-public class Endpoint(Logger<Endpoint> logger, CalendarService calendarService) : Endpoint<int, List<Response>, EventMapper>
+public class Endpoint(ILogger<Endpoint> logger, ICalendarService calendarService) : Endpoint<int, List<Response>, EventMapper>
 {
     public override async Task HandleAsync(int req, CancellationToken ct)
     {
