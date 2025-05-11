@@ -4,5 +4,9 @@
     .content-wrapper {
         display: flex;
         gap: 40px;
+
+        .router-outlet-wrapper {
+            flex: 1;
+        }
     }
 }
