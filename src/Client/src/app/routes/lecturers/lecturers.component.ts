@@ -20,7 +20,7 @@ export class LecturersComponent implements AfterViewInit {
     @ViewChild(MatSort)
     protected readonly matSort!: MatSort;
     protected readonly displayedColumns: string[] = ["email", "name", "lastName", "preview-calendar"];
-    protected readonly dataSource: MatTableDataSource<Lecturer> = new MatTableDataSource();
+    protected readonly dataSource: MatTableDataSource<Lecturer> = new MatTableDataSource<Lecturer>();
     protected readonly RoutePath: typeof RoutePath = RoutePath;
 
     private readonly _lecturersService: LecturersService = inject(LecturersService);
