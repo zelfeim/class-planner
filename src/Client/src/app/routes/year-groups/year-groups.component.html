@@ -1,37 +1,34 @@
 <h1>Roczniki</h1>
 
 <div class="yeargroup-wrapper">
-    <table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange()">
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange()">
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-        </ng-container>
-        <ng-container matColumnDef="rocznik">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Rocznik</th>
-            <td mat-cell *matCellDef="let element">{{ element.rocznik }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="opiekunRoku">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Opiekun Roku</th>
-            <td mat-cell *matCellDef="let element">{{ element.opiekunRoku }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="trybStudiow">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tryb studiów</th>
-            <td mat-cell *matCellDef="let element">{{ element.trybStudiow }}</td>
-        </ng-container>
-        <ng-container matColumnDef="preview-calendar">
-            <th mat-header-cell *matHeaderCellDef>Zobacz plan</th>
-            <td mat-cell *matCellDef="let element">
-                <!--TODO: path to lecturer plans-->
-                <a [routerLink]="[RoutePath.HOME, element.id]">
-                    <mat-icon fontIcon="visibility"></mat-icon>
-                </a>
-            </td>
-        </ng-container>
-
-    </table>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="yearGroup">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rocznik</th>
+      <td mat-cell *matCellDef="let element">{{ element.yearGroup }}</td>
+    </ng-container>
+    <ng-container matColumnDef="yearSupervisor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Opiekun Roku</th>
+      <td mat-cell *matCellDef="let element">{{ element.yearSupervisor }}</td>
+    </ng-container>
+    <ng-container matColumnDef="studyMode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tryb studiów</th>
+      <td mat-cell *matCellDef="let element">{{ element.studyMode }}</td>
+    </ng-container>
+    <ng-container matColumnDef="preview-calendar">
+      <th mat-header-cell *matHeaderCellDef>Zobacz plan</th>
+      <td mat-cell *matCellDef="let element">
+        <!-- TODO: path to year group plans -->
+        <a [routerLink]="[RoutePath.HOME, element.id]">
+          <mat-icon fontIcon="visibility"></mat-icon>
+        </a>
+      </td>
+    </ng-container>
+  </table>
 </div>
