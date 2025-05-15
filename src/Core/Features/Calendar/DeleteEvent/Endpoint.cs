@@ -1,4 +1,5 @@
 using Core.Features.Calendar.Services;
+using Core.Features.Calendar.Services.Interfaces;
 using Core.Infrastructure.Persistence;
 using FastEndpoints;
 using Microsoft.Extensions.Logging;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace Core.Features.Calendar.DeleteEvent;
 
 [HttpDelete("/api/calendar/{calendarId:int}/event/{eventId:int}")]
-public class Endpoint(Logger<Endpoint> logger, CalendarService calendarService) : Endpoint<Request>
+public class Endpoint(ILogger<Endpoint> logger, ICalendarService calendarService) : Endpoint<Request>
 {
     public override Task HandleAsync(Request req, CancellationToken ct)
     {

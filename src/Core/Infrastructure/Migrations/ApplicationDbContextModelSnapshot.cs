@@ -146,11 +146,29 @@ namespace Core.Infrastructure.Migrations
 
                     b.HasIndex("CalendarId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Event");
 
                     b.HasDiscriminator().HasValue("Event");
 
                     b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Core.Domain.Entity.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("YearId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("YearId");
+
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.Lecturer", b =>
@@ -170,7 +188,7 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Lecturers");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entity.Set", b =>
+            modelBuilder.Entity("Core.Domain.Entity.Year", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,50 +196,9 @@ namespace Core.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("character varying(5)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Sets");
-
-                    b.HasDiscriminator().HasValue("Set");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Core.Domain.Entity.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("SetStudent", b =>
-                {
-                    b.Property<int>("SetsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("SetsId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("SetStudent");
+                    b.ToTable("Years");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.ClassEvent", b =>
@@ -241,20 +218,6 @@ namespace Core.Infrastructure.Migrations
                     b.HasBaseType("Core.Domain.Entity.Event");
 
                     b.HasDiscriminator().HasValue("DayEvent");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entity.Group", b =>
-                {
-                    b.HasBaseType("Core.Domain.Entity.Set");
-
-                    b.HasDiscriminator().HasValue("Group");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entity.Year", b =>
-                {
-                    b.HasBaseType("Core.Domain.Entity.Set");
-
-                    b.HasDiscriminator().HasValue("Year");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.Calendar", b =>
@@ -314,17 +277,11 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Calendar");
                 });
 
-            modelBuilder.Entity("SetStudent", b =>
+            modelBuilder.Entity("Core.Domain.Entity.Group", b =>
                 {
-                    b.HasOne("Core.Domain.Entity.Set", null)
-                        .WithMany()
-                        .HasForeignKey("SetsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Domain.Entity.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
+                    b.HasOne("Core.Domain.Entity.Year", null)
+                        .WithMany("Groups")
+                        .HasForeignKey("YearId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -355,19 +312,21 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Classes");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entity.Lecturer", b =>
-                {
-                    b.Navigation("Class");
-                });
-
             modelBuilder.Entity("Core.Domain.Entity.Group", b =>
                 {
                     b.Navigation("Classes");
                 });
 
+            modelBuilder.Entity("Core.Domain.Entity.Lecturer", b =>
+                {
+                    b.Navigation("Class");
+                });
+
             modelBuilder.Entity("Core.Domain.Entity.Year", b =>
                 {
                     b.Navigation("Calendar");
+
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }
