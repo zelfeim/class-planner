@@ -8,13 +8,13 @@ on:
     branches: [ "main" ]
     paths:
       - 'src/**'
-      - '!src/Client'
+      - '!src/Client/**'
       - 'tests/**'
   pull_request:
     branches: [ "main" ]
     paths:
       - 'src/**'
-      - '!src/Client'
+      - '!src/Client/**'
       - 'tests/**'
       - '.github/workflows/dotnet.yml'
 
