@@ -1,14 +1,13 @@
-<h1>Sale</h1>
+<h1>Classrooms</h1>
 
 <div class="classrooms-wrapper">
-    <table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange()">
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange()">
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-        <ng-container matColumnDef="sala">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sala</th>
-            <td mat-cell *matCellDef="let element">{{ element.sala }}</td>
-        </ng-container>
-
-    </table>
+    <ng-container matColumnDef="classroom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Classroom</th>
+      <td mat-cell *matCellDef="let element">{{ element.classroom }}</td>
+    </ng-container>
+  </table>
 </div>
