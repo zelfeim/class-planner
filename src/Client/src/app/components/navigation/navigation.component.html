@@ -1,24 +1,20 @@
 <nav class="navigation">
-    <ul class="navigation__links">
-        <a [routerLink]="RoutePath.HOME" class="link">
-            <mat-icon class="link__icon" fontIcon="home"></mat-icon>
-            <div class="link__name">Home</div>
-        </a>
-
-        <a [routerLink]="RoutePath.YEAR_GROUPS" class="link">
-            <mat-icon class="link__icon" fontIcon="group"></mat-icon>
-            <div class="link__name">Roczniki</div>
-        </a>
-
-        <a *cpIfAuthenticated="true" [routerLink]="RoutePath.LECTURERS" class="link">
-            <mat-icon class="link__icon" fontIcon="school"></mat-icon>
-
-            <div class="link__name">Wykładowcy</div>
-        </a>
-
-        <a *cpIfAuthenticated="true" [routerLink]="RoutePath.CLASSROOMS" class="link">
-            <mat-icon class="link__icon" fontIcon="door_sliding"></mat-icon>
-            <div class="link__name">Sale</div>
-        </a>
-    </ul>
+  <ul class="navigation__links">
+    <a [routerLink]="RoutePath.HOME" class="link">
+      <mat-icon class="link__icon" fontIcon="home"></mat-icon>
+      <div class="link__name">Home</div>
+    </a>
+    <a [routerLink]="RoutePath.YEAR_GROUPS" class="link">
+      <mat-icon class="link__icon" fontIcon="group"></mat-icon>
+      <div class="link__name">Year Groups</div>
+    </a>
+    <a *cpIfAuthenticated="true" [routerLink]="RoutePath.LECTURERS" class="link">
+      <mat-icon class="link__icon" fontIcon="school"></mat-icon>
+      <div class="link__name">Lecturers</div>
+    </a>
+    <a *cpIfAuthenticated="true" [routerLink]="RoutePath.CLASSROOMS" class="link">
+      <mat-icon class="link__icon" fontIcon="door_sliding"></mat-icon>
+      <div class="link__name">Classrooms</div>
+    </a>
+  </ul>
 </nav>
