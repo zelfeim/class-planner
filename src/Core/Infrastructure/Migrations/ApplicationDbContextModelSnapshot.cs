@@ -188,28 +188,6 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Lecturers");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entity.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("YearId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("YearId");
-
-                    b.ToTable("Students");
-                });
-
             modelBuilder.Entity("Core.Domain.Entity.Year", b =>
                 {
                     b.Property<int>("Id")
@@ -221,21 +199,6 @@ namespace Core.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Years");
-                });
-
-            modelBuilder.Entity("GroupStudent", b =>
-                {
-                    b.Property<int>("GroupsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("GroupsId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("GroupStudent");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.ClassEvent", b =>
@@ -323,30 +286,6 @@ namespace Core.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Domain.Entity.Student", b =>
-                {
-                    b.HasOne("Core.Domain.Entity.Year", null)
-                        .WithMany("Students")
-                        .HasForeignKey("YearId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GroupStudent", b =>
-                {
-                    b.HasOne("Core.Domain.Entity.Group", null)
-                        .WithMany()
-                        .HasForeignKey("GroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Domain.Entity.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Core.Domain.Entity.ClassEvent", b =>
                 {
                     b.HasOne("Core.Domain.Entity.Class", "Class")
@@ -388,8 +327,6 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Calendar");
 
                     b.Navigation("Groups");
-
-                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }
