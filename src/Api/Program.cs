@@ -2,7 +2,9 @@ using Core.Features.Calendar.Services;
 using Core.Features.Calendar.Services.Interfaces;
 using Core.Infrastructure.Persistence;
 using FastEndpoints;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,10 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
+builder.Services.AddCors();
 builder.Services.AddOpenApi();
-builder.Services.AddFastEndpoints().SwaggerDocument();
+builder
+    .Services.AddAuthenticationCookie(TimeSpan.FromHours(2))
+    .AddFastEndpoints()
+    .SwaggerDocument();
 
-builder.Services.AddDbContext<ApplicationDbContext>((o) =>
+builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
     o.UseNpgsql();
 });
@@ -33,6 +39,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseFastEndpoints().UseSwaggerGen();
+app.UseAuthentication().UseAuthorization().UseFastEndpoints().UseSwaggerGen();
 
 app.Run();
+
+public partial class Program { }

@@ -7,7 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FastEndpoints" Version="6.0.0" />
+        <PackageReference Include="FastEndpoints" Version="6.1.0" />
+        <PackageReference Include="FastEndpoints.Security" Version="6.1.0" />
         <PackageReference Include="FastEndpoints.Swagger" Version="6.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
@@ -19,6 +20,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Core\Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Login\" />
+      <Folder Include="Logout\" />
     </ItemGroup>
 
 </Project>
