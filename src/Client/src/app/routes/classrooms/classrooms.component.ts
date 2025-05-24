@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, inject, ViewChild } from "@angular/core";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
@@ -8,15 +8,14 @@ import { Classroom } from "../../types/classroom";
 import { take } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MatIconModule } from "@angular/material/icon";
-import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "cp-classrooms",
-    imports: [MatTableModule, MatSortModule, MatIconModule, RouterLink],
+    imports: [MatTableModule, MatSortModule, MatIconModule],
     templateUrl: "./classrooms.component.html",
     styleUrl: "./classrooms.component.scss"
 })
-export class ClassroomsComponent {
+export class ClassroomsComponent implements AfterViewInit {
     @ViewChild(MatSort)
     protected readonly matSort!: MatSort;
     protected readonly displayedColumns: string[] = ["name"];
