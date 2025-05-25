@@ -25,8 +25,6 @@ const classrooms: Classroom[] = [
     providedIn: "root"
 })
 export class ClassroomsService {
-    constructor() {}
-
     public getAll(): Observable<Classroom[]> {
         return of([...classrooms]);
     }

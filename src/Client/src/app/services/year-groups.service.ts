@@ -29,8 +29,6 @@ const yearGroups: YearGroup[] = [
     providedIn: "root"
 })
 export class YearGroupsService {
-    constructor() {}
-
     public getAll(): Observable<YearGroup[]> {
         return of([...yearGroups]);
     }
