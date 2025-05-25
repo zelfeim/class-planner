@@ -13,10 +13,10 @@ public class CreateCourseEndpoint(ILogger<CreateCourseEndpoint> logger, Applicat
         
         var newCourse = Map.ToEntity(req);
 
-        if (dbContext.Courses.Any(x => x.Name == newCourse.Name))
+        if (dbContext.Courses.Any(x => x.Id == newCourse.Id))
         {
-            logger.LogWarning("Course with this name already exists.");
-            ThrowError("Course with this name already exists.");
+            logger.LogWarning("Course with this id already exists.");
+            ThrowError("Course with this id  already exists.");
         }
         
         

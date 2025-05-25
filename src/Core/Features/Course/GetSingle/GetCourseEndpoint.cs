@@ -9,13 +9,13 @@ public class GetCourseEndpoint(ILogger<GetCourseEndpoint> logger, ApplicationDbC
 {
     public override async Task HandleAsync(GetCourseRequest req, CancellationToken ct)
     {
-        logger.LogInformation("Getting course with Name {Name}.", req.Name); 
+        logger.LogInformation("Getting course with Id {Id}.", req.Id); 
         
-        var course = await dbContext.Courses.FindAsync([req.Name], cancellationToken: ct);
+        var course = await dbContext.Courses.FindAsync([req.Id], cancellationToken: ct);
         
         if (course == null)
         {
-            Logger.LogWarning("Course with Name {Name} not found.", req.Name);
+            Logger.LogWarning("Course with Id {Id} not found.", req.Id);
             await SendNotFoundAsync(ct);
             return;
         }                                                                                                    

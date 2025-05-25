@@ -8,9 +8,9 @@ public class GetCourseMapper : Mapper<GetCourseRequest, GetCourseResponse, Domai
     {
         return new GetCourseResponse()
         {
-            Name= e.Name, 
+            Id = e.Id,
+            Name = e.Name,
             Hours = e.Hours,
-        }; 
+        };
     }
-    
 }

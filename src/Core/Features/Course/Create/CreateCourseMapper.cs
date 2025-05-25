@@ -8,6 +8,7 @@ public class CreateCourseMapper : RequestMapper<CreateCourseRequest, Domain.Enti
     {
         return new Domain.Entity.Course
         {
+            Id = r.Id,
             Name = r.Name,
             Hours = r.Hours,
         };

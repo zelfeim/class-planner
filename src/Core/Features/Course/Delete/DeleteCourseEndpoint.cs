@@ -9,13 +9,13 @@ public class DeleteCourseEndpoint(ILogger<DeleteCourseEndpoint> logger, Applicat
 {
     public override async Task HandleAsync(DeleteCourseRequest req, CancellationToken ct)
     {
-        logger.LogInformation("Deleting course with Name  {Name}.", req.Name);
+        logger.LogInformation("Deleting course with Id {Id}.", req.Id);
 
-        var course = await dbContext.Courses.FindAsync([req.Name], cancellationToken: ct);
+        var course = await dbContext.Courses.FindAsync([req.Id], cancellationToken: ct);
 
         if (course == null)
         {
-            logger.LogWarning("Course with name {Name} not found.", req.Name);
+            logger.LogWarning("Course with Id {Id} not found.", req.Id);
             await SendNotFoundAsync(ct);
             return;
         }
