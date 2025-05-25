@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ClassroomsComponent } from "./classrooms.component";
 import { provideExperimentalZonelessChangeDetection } from "@angular/core";
+import { provideRouter } from "@angular/router";
+import { RoutePath } from "../../enums/route-path";
 
 describe("ClassroomsComponent", () => {
     let component: ClassroomsComponent;
@@ -9,7 +11,10 @@ describe("ClassroomsComponent", () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            providers: [provideExperimentalZonelessChangeDetection()],
+            providers: [
+                provideExperimentalZonelessChangeDetection(),
+                provideRouter([{ path: RoutePath.CLASSROOMS, component: ClassroomsComponent }])
+            ],
             imports: [ClassroomsComponent]
         }).compileComponents();
 
