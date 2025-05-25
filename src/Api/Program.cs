@@ -15,16 +15,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
+    .Build();
+
+builder.Services.AddSingleton<IConfiguration>(configuration);
+
 builder.Services.AddCors();
 builder.Services.AddOpenApi();
 builder
-    .Services.AddAuthenticationCookie(TimeSpan.FromHours(2))
+    .Services.AddAuthorization()
+    .AddAuthenticationCookie(TimeSpan.FromHours(2))
     .AddFastEndpoints()
     .SwaggerDocument();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
-    o.UseNpgsql();
+    o.UseNpgsql(builder.Configuration.GetConnectionString("ApplicationDbContext"));
 });
 
 builder.Services.AddScoped<ICalendarService, CalendarService>();
