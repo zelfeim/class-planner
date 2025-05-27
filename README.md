@@ -3,5 +3,5 @@ Class planner made for 'Projekt Zespołowy' classes.
 
 Idea for technical stack:
 - Frontend - Angular
-- Backend - Go
+- Backend - Asp.Net
 - DB - PostgreSQL

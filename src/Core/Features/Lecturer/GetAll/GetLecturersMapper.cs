@@ -1,4 +1,3 @@
-using Core.Features.Lecturer.GetMultiple;
 using Core.Features.Lecturer.GetSingle;
 using FastEndpoints;
 
@@ -8,11 +7,10 @@ public class GetLecturersMapper : ResponseMapper<GetLecturersResponse, List<Doma
 {
     public override GetLecturersResponse FromEntity(List<Domain.Entity.Lecturer> e)
     {
-        var lecturerMapper = Resolve<GetLecturerMapper>();
-
+        var lecturerMapper = new GetLecturerMapper();
         return new GetLecturersResponse
         {
-            Lecturers = e.Select(lecturerMapper.FromEntity).ToList()
+            Lecturers = e.Select(lecturerMapper.FromEntity).ToList(),
         };
     }
 }
