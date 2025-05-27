@@ -3,14 +3,15 @@ using FastEndpoints;
 
 namespace Core.Features.Classroom.GetAll;
 
-public class GetAllClassroomsMapper : ResponseMapper<GetAllClassroomsResponse, List<Domain.Entity.Classroom>>
+public class GetAllClassroomsMapper
+    : ResponseMapper<GetAllClassroomsResponse, List<Domain.Entity.Classroom>>
 {
     public override GetAllClassroomsResponse FromEntity(List<Domain.Entity.Classroom> e)
     {
-        var getClassroomMapper = Resolve<GetClassroomMapper>();
+        var classroomMapper = new GetClassroomMapper();
         return new GetAllClassroomsResponse
         {
-            Classrooms = e.Select(getClassroomMapper.FromEntity).ToList()
+            Classrooms = e.Select(classroomMapper.FromEntity).ToList(),
         };
     }
 }
