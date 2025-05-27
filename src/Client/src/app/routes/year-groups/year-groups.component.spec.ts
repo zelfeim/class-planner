@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { YearGroupsComponent } from "./year-groups.component";
 import { provideExperimentalZonelessChangeDetection } from "@angular/core";
+import { provideRouter } from "@angular/router";
+import { RoutePath } from "../../enums/route-path";
 
 describe("YearGroupsComponent", () => {
     let component: YearGroupsComponent;
@@ -9,7 +11,10 @@ describe("YearGroupsComponent", () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            providers: [provideExperimentalZonelessChangeDetection()],
+            providers: [
+                provideExperimentalZonelessChangeDetection(),
+                provideRouter([{ path: RoutePath.YEAR_GROUPS, component: YearGroupsComponent }])
+            ],
             imports: [YearGroupsComponent]
         }).compileComponents();
 
