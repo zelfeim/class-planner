@@ -32,7 +32,7 @@ builder
 
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
-    o.UseNpgsql(builder.Configuration.GetConnectionString("ApplicationDbContext"));
+    o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddScoped<ICalendarService, CalendarService>();
