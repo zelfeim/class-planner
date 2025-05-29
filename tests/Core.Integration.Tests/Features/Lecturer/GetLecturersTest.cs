@@ -1,4 +1,3 @@
-using Bogus;
 using Core.Features.Lecturer.GetAll;
 using FastEndpoints;
 using FastEndpoints.Testing;
@@ -27,13 +26,5 @@ public class GetLecturersEndpointTest(Sut app) : TestBase<Sut>
         // Assert
         response.Response.EnsureSuccessStatusCode();
         response.Result.Lecturers.Should().HaveCount(2);
-    }
-}
-
-public static class Fakes
-{
-    internal static Domain.Entity.Lecturer Lecturer(this Faker faker)
-    {
-        return new Domain.Entity.Lecturer { Email = faker.Person.Email };
     }
 }
