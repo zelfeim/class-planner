@@ -8,9 +8,14 @@ public interface ICalendarService
 
     public Task<Event> GetEventAsync(int calendarId, int eventId);
 
-    public Task<int> AddEventAsync(AddClassEvent.Request req, CancellationToken ct);
+    public Task<int> AddClassEventAsync(AddClassEvent.Request req, CancellationToken ct);
 
     public void DeleteEvent(int calendarId, int eventId);
 
-    public Task MoveEventAsync(int calendarId, int eventId, DateTime newStartTime, DateTime newEndTime);
+    public Task MoveEventAsync(
+        int calendarId,
+        int eventId,
+        DateTime newStartTime,
+        DateTime newEndTime
+    );
 }

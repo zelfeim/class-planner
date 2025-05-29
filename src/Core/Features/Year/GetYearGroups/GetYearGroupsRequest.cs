@@ -2,5 +2,5 @@ namespace Core.Features.Year.GetYearGroups;
 
 public record GetYearGroupsRequest
 {
-    public int YearId { get; init; }
+    public int Id { get; init; }
 }
