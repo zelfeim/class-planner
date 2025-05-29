@@ -1,8 +1,8 @@
 using Core.Features.Lecturer.GetSingle;
 
-namespace Core.Features.Lecturer.GetMultiple;
+namespace Core.Features.Lecturer.GetAll;
 
 public class GetLecturersResponse
 {
-    public List<GetLecturerResponse> Lecturers { get; set; } = []; 
+    public List<GetLecturerResponse> Lecturers { get; init; } = [];
 }
