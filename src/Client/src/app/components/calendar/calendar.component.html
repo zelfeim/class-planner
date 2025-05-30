@@ -1,0 +1,57 @@
+<div class="calendar">
+	<div class="calendar-menu">
+		<div class="calendar-menu__week">
+			<button
+				(click)="goToPreviousWeek()"
+				[disabled]="!hasPreviousWeek()"
+				mat-button
+				class="previous-week">
+				Poprzedni tydzień
+			</button>
+
+			<div class="current-week">
+				{{ currentFirstDisplayedDay() | formatDateRangePipe : currentLastDisplayedDay() }}
+			</div>
+
+			<button
+				(click)="goToNextWeek()"
+				[disabled]="!hasNextWeek()"
+				mat-button
+				class="next-week">
+				Następny tydzień
+			</button>
+		</div>
+
+	</div>
+
+	<header class="calendar-header">
+		<div *ngFor="let day of getDisplayedDays()" class="calendar-header-day">
+			{{ DAY_NAMES[day] }}
+		</div>
+	</header>
+
+	<div class="calendar-grid-wrapper">
+		<div
+			*ngFor="let hour of getTemplateHours()"
+			[ngStyle]="getRowHeightStyle()"
+			class="hour-row">
+			<div class="hour-row__label">
+				{{ hour | formatHourPipe }}
+			</div>
+		</div>
+
+		<div class="day-cols-wrapper">
+			<div *ngFor="let day of getDisplayedDays()" class="day-col"></div>
+		</div>
+
+		<div class="events-wrapper">
+			<div *ngFor="let day of getDisplayedDays()" class="day-events-column">
+				<div *ngFor="let segmentation of groupSegmentations" class="day-segmentation-events-column">
+					<div *ngFor="let group of getSegmentationGroups(segmentation)"
+					     [ngClass]="getDayGroupEventsCellClass(day, segmentation, group)"
+					     class="day-group-events-column"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
