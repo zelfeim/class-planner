@@ -1,7 +1,7 @@
 using Bogus;
 using Core.Domain.Entity;
 
-namespace Core.Tests;
+namespace Core.Integration.Tests;
 
 public static class Fakes
 {

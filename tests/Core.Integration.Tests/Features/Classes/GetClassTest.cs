@@ -5,7 +5,7 @@ using FastEndpoints.Testing;
 using FluentAssertions;
 using Group = Core.Domain.Entity.Group;
 
-namespace Core.Tests.Features.Classes;
+namespace Core.Integration.Tests.Features.Classes;
 
 public class GetClassTest(Sut app) : TestBase<Sut>
 {

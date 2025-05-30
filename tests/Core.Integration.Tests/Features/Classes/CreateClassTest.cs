@@ -3,7 +3,7 @@ using FastEndpoints;
 using FastEndpoints.Testing;
 using FluentAssertions;
 
-namespace Core.Tests.Features.Classes;
+namespace Core.Integration.Tests.Features.Classes;
 
 public class CreateClassTest(Sut app) : TestBase<Sut>
 {

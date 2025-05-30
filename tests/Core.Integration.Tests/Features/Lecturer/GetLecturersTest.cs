@@ -3,7 +3,7 @@ using FastEndpoints;
 using FastEndpoints.Testing;
 using FluentAssertions;
 
-namespace Core.Tests.Features.Lecturer;
+namespace Core.Integration.Tests.Features.Lecturer;
 
 public class GetLecturersEndpointTest(Sut app) : TestBase<Sut>
 {
