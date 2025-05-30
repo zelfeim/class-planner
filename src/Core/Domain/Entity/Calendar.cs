@@ -2,11 +2,11 @@ namespace Core.Domain.Entity;
 
 public class Calendar
 {
-    public Calendar() {}
-    
-    public Calendar(string yearId)
+    public Calendar() { }
+
+    public Calendar(int yearId)
     {
-        YearId = Convert.ToInt32(yearId);
+        YearId = yearId;
     }
 
     public int Id { get; set; }

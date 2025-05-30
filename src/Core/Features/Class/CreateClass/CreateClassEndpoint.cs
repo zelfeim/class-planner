@@ -20,6 +20,23 @@ public class CreateClassEndpoint(
             req.GroupId
         );
 
+        if (!dbContext.Courses.Any(x => x.Id == req.CourseId))
+        {
+            ThrowError("Course with this id does not exist.");
+        }
+        if (!dbContext.Lecturers.Any(x => x.Id == req.LecturerId))
+        {
+            ThrowError("Lecturer with this id does not exist.");
+        }
+        if (!dbContext.Groups.Any(x => x.Id == req.GroupId))
+        {
+            ThrowError("Group with this id does not exist.");
+        }
+        if (!dbContext.Classrooms.Any(x => x.Id == req.ClassroomId))
+        {
+            ThrowError("Classroom with this id does not exist.");
+        }
+
         var classEntity = Map.ToEntity(req);
 
         await dbContext.Classes.AddAsync(classEntity, ct);
@@ -45,6 +62,7 @@ public class CreateClassMapper
             Name = r.Name,
             ClassroomId = r.ClassroomId,
             LecturerId = r.LecturerId,
+            CourseId = r.CourseId,
             GroupId = r.GroupId,
             Length = r.Length,
         };
@@ -60,6 +78,7 @@ public record CreateClassRequest
 {
     public required string Name { get; init; }
     public int ClassroomId { get; init; }
+    public int CourseId { get; init; }
     public int LecturerId { get; init; }
     public int GroupId { get; init; }
     public uint Length { get; init; }

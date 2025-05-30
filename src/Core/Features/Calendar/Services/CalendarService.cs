@@ -103,7 +103,8 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
 
         #endregion
 
-        dbContext.ClassEvents.Add(newClassEvent);
+        await dbContext.ClassEvents.AddAsync(newClassEvent, ct);
+        await dbContext.SaveChangesAsync(ct);
 
         return newClassEvent.Id;
     }
@@ -113,6 +114,7 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
         var foundEvent = GetEventAsync(calendarId, eventId);
 
         dbContext.Remove(foundEvent);
+        dbContext.SaveChanges();
     }
 
     public async Task MoveEventAsync(
@@ -145,28 +147,10 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
         Domain.Entity.Classroom classroom
     )
     {
-        var classCollisionTask = ValidateClassCollisionsAsync(calendarId, startTime, endTime);
-        var specialDaysTask = ValidateSpecialDaysCollisionsAsync(calendarId, startTime, endTime);
-        var lecturerAvailabilityTask = ValidateLecturerAvailabilityAsync(
-            calendarId,
-            startTime,
-            endTime,
-            lecturer
-        );
-        ;
-        var classroomAvailabilityTask = ValidateClassroomAvailabilityAsync(
-            calendarId,
-            startTime,
-            endTime,
-            classroom
-        );
-
-        await Task.WhenAll(
-            classCollisionTask,
-            specialDaysTask,
-            lecturerAvailabilityTask,
-            classroomAvailabilityTask
-        );
+        await ValidateClassCollisionsAsync(calendarId, startTime, endTime);
+        await ValidateSpecialDaysCollisionsAsync(calendarId, startTime, endTime);
+        await ValidateLecturerAvailabilityAsync(calendarId, startTime, endTime, lecturer);
+        await ValidateClassroomAvailabilityAsync(calendarId, startTime, endTime, classroom);
     }
 
     // Should do something to not pass calendarId to method...

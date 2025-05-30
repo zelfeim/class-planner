@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Features.Class.GetClasses;
 
-[HttpGet("api/classes")]
+[HttpGet("api/class")]
 public class GetClassesEndpoint(ILogger<GetClassesEndpoint> logger, ApplicationDbContext dbContext)
     : EndpointWithoutRequest<GetClassesResponse, GetClassesMapper>
 {

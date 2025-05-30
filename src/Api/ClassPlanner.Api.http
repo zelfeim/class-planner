@@ -1,6 +1,92 @@
-@ClassPlanner.Api_HostAddress = http://localhost:5156
+@Api_HostAddress = http://localhost:5156
 
-GET {{ClassPlanner.Api_HostAddress}}/weatherforecast/
+POST {{Api_HostAddress}}/api/login
 Accept: application/json
+Content-Type: application/json
+
+{
+"password": "password"
+}
 
 ###
+GET {{Api_HostAddress}}/api/logout
+
+###
+GET {{Api_HostAddress}}/api/year
+
+### 
+POST {{Api_HostAddress}}/api/year
+Content-Type: application/json
+
+{
+  "Mode": "FullTime",
+  "Name": "FT2"
+}
+
+###
+GET {{Api_HostAddress}}/api/lecturer
+
+###
+POST {{Api_HostAddress}}/api/year/1/group
+Content-Type: application/json
+
+{
+  "Type": "Seminary",
+  "Classification": "Seminary-1"
+}
+
+###
+GET {{Api_HostAddress}}/api/year/1/group
+
+###
+POST {{Api_HostAddress}}/api/course
+Content-Type: application/json
+
+{
+  "Name": "Useless course",
+  "Hours": 30
+}
+
+###
+GET {{Api_HostAddress}}/api/course
+
+###
+POST {{Api_HostAddress}}/api/classroom/create
+Content-Type: application/json
+
+{
+  "Number": "15"
+}
+
+###
+GET {{Api_HostAddress}}/api/class
+
+###
+POST {{Api_HostAddress}}/api/class
+Content-Type: application/json
+
+{
+  "Name": "Useless class",
+  "LecturerId": 1,
+  "CourseId": 1,
+  "ClassroomId": 1,
+  "GroupId": 1,
+  "Length": 90
+}
+
+###
+POST {{Api_HostAddress}}/api/calendar
+Content-Type: application/json
+
+{
+  "YearId": 1
+}
+
+###
+POST {{Api_HostAddress}}/api/calendar/1/add-class/3
+Content-Type: application/json
+
+{
+  "StartTime": "2035-05-30T10:00:00Z",
+  "EndTime": "2035-05-30T11:30:00Z"
+}

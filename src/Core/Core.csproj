@@ -20,6 +20,6 @@
   <ItemGroup>
     <Folder Include="Features\Calendar\GetEventCollisions\" />
     <Folder Include="Features\Event\" />
-    <Folder Include="Infrastructure\Migrations\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

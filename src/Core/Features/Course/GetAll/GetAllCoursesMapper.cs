@@ -7,10 +7,10 @@ public class GetAllCoursesMapper : ResponseMapper<GetAllCoursesResponse, List<Do
 {
     public override GetAllCoursesResponse FromEntity(List<Domain.Entity.Course> e)
     {
-        var getCoursesMapper = Resolve<GetCourseMapper>();
+        var getCoursesMapper = new GetCourseMapper();
         return new GetAllCoursesResponse
         {
-            Courses = e.Select(getCoursesMapper.FromEntity).ToList()
+            Courses = e.Select(getCoursesMapper.FromEntity).ToList(),
         };
     }
 }

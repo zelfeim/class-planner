@@ -7,16 +7,27 @@ public static class Fakes
 {
     public static Lecturer Lecturer(this Faker faker)
     {
-        return new Lecturer { Id = faker.IndexFaker, Email = faker.Person.Email };
+        return new Lecturer { Id = faker.IndexGlobal, Email = faker.Person.Email };
     }
 
-    public static Group Group(this Faker faker)
+    public static Year Year(this Faker faker)
+    {
+        return new Year
+        {
+            Id = faker.IndexGlobal,
+            Mode = StudyMode.FullTime,
+            Name = faker.Random.String(3),
+        };
+    }
+
+    public static Group Group(this Faker faker, int yearId)
     {
         return new Group
         {
             Classification = "A",
             Type = GroupType.Seminary,
             Id = faker.IndexFaker,
+            YearId = yearId,
         };
     }
 
