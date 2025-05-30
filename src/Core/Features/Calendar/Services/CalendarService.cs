@@ -19,6 +19,7 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
 
         var calendar = await dbContext
             .Calendars.Include(calendar => calendar.Events)
+            .ThenInclude(e => ((ClassEvent)e).Class)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (calendar == null)
@@ -95,6 +96,7 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
             calendar.Id,
             req.StartTime,
             req.EndTime,
+            classInstance,
             classInstance.Lecturer,
             classInstance.Classroom
         );
@@ -128,8 +130,16 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
 
         var selectedEvent = await GetEventAsync(calendarId, eventId);
 
-        await ValidateClassCollisionsAsync(calendarId, newStartTime, newEndTime);
-        await ValidateSpecialDaysCollisionsAsync(calendarId, newStartTime, newEndTime);
+        if (selectedEvent is ClassEvent classEvent)
+        {
+            await ValidateClassCollisionsAsync(
+                calendarId,
+                newStartTime,
+                newEndTime,
+                classEvent.Class
+            );
+            await ValidateSpecialDaysCollisionsAsync(calendarId, newStartTime, newEndTime);
+        }
 
         validationContext.ThrowIfAnyErrors();
 
@@ -143,11 +153,12 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
         int calendarId,
         DateTime startTime,
         DateTime endTime,
+        Domain.Entity.Class @class,
         Domain.Entity.Lecturer lecturer,
         Domain.Entity.Classroom classroom
     )
     {
-        await ValidateClassCollisionsAsync(calendarId, startTime, endTime);
+        await ValidateClassCollisionsAsync(calendarId, startTime, endTime, @class);
         await ValidateSpecialDaysCollisionsAsync(calendarId, startTime, endTime);
         await ValidateLecturerAvailabilityAsync(calendarId, startTime, endTime, lecturer);
         await ValidateClassroomAvailabilityAsync(calendarId, startTime, endTime, classroom);
@@ -158,7 +169,8 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
     private async Task ValidateClassCollisionsAsync(
         int calendarId,
         DateTime startTime,
-        DateTime endTime
+        DateTime endTime,
+        Domain.Entity.Class @class
     )
     {
         var validationContext = ValidationContext.Instance;
@@ -166,7 +178,9 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
         var events = await GetEventsAsync(calendarId);
         var classEvents = events.OfType<ClassEvent>().ToList();
 
-        if (classEvents.WhereOverlapping(startTime, endTime).Any())
+        var sameClassEvents = classEvents.Where(x => x.Class.Id == @class.Id);
+
+        if (sameClassEvents.WhereOverlapping(startTime, endTime).Any())
         {
             logger.LogWarning("Class occurence overlaps with another class occurence");
             validationContext.AddError("Class occurence overlaps with another class occurence");
@@ -205,7 +219,7 @@ public class CalendarService(ILogger<CalendarService> logger, ApplicationDbConte
         var classEvents = events.OfType<ClassEvent>().ToList();
 
         var lecturerEvents = classEvents.Where(x => x.Class.Lecturer == lecturer);
-        ;
+
         if (lecturerEvents.WhereOverlapping(startTime, endTime).Any())
         {
             logger.LogWarning("Lecturer has another class occurence at the same time");

@@ -37,6 +37,11 @@ public class CreateClassEndpoint(
             ThrowError("Classroom with this id does not exist.");
         }
 
+        if (dbContext.Classes.Any(x => x.GroupId == req.GroupId && x.CourseId == req.CourseId))
+        {
+            ThrowError("Such class already exists.");
+        }
+
         var classEntity = Map.ToEntity(req);
 
         await dbContext.Classes.AddAsync(classEntity, ct);

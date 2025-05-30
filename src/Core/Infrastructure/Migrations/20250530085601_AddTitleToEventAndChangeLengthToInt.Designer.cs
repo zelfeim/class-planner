@@ -3,6 +3,7 @@ using System;
 using Core.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250530085601_AddTitleToEventAndChangeLengthToInt")]
+    partial class AddTitleToEventAndChangeLengthToInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,13 +73,15 @@ namespace Core.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassroomId");
+                    b.HasIndex("ClassroomId")
+                        .IsUnique();
 
                     b.HasIndex("CourseId");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("LecturerId");
+                    b.HasIndex("LecturerId")
+                        .IsUnique();
 
                     b.ToTable("Classes");
                 });
@@ -253,8 +258,8 @@ namespace Core.Infrastructure.Migrations
             modelBuilder.Entity("Core.Domain.Entity.Class", b =>
                 {
                     b.HasOne("Core.Domain.Entity.Classroom", "Classroom")
-                        .WithMany("Classes")
-                        .HasForeignKey("ClassroomId")
+                        .WithOne("Class")
+                        .HasForeignKey("Core.Domain.Entity.Class", "ClassroomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -271,8 +276,8 @@ namespace Core.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Domain.Entity.Lecturer", "Lecturer")
-                        .WithMany("Classes")
-                        .HasForeignKey("LecturerId")
+                        .WithOne("Class")
+                        .HasForeignKey("Core.Domain.Entity.Class", "LecturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -323,7 +328,7 @@ namespace Core.Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Domain.Entity.Classroom", b =>
                 {
-                    b.Navigation("Classes");
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.Course", b =>
@@ -338,7 +343,7 @@ namespace Core.Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Domain.Entity.Lecturer", b =>
                 {
-                    b.Navigation("Classes");
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.Year", b =>
