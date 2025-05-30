@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Core.Features.Calendar.Services;
 using Core.Features.Calendar.Services.Interfaces;
 using Core.Infrastructure.Persistence;
@@ -6,6 +8,7 @@ using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +36,7 @@ builder
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
 {
     o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    o.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 });
 
 builder.Services.AddScoped<ICalendarService, CalendarService>();
@@ -47,7 +51,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication().UseAuthorization().UseFastEndpoints().UseSwaggerGen();
+app.UseAuthentication()
+    .UseAuthorization()
+    .UseFastEndpoints(c =>
+    {
+        c.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+        c.Serializer.Options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    })
+    .UseSwaggerGen();
 
 app.Run();
 

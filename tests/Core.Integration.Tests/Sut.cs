@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
 
-namespace Core.Tests;
+namespace Core.Integration.Tests;
 
 public class Sut : AppFixture<Program>
 {
@@ -27,6 +27,7 @@ public class Sut : AppFixture<Program>
         DbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         await DbContext.Database.MigrateAsync();
+        await DbContext.SaveChangesAsync();
     }
 
     protected override void ConfigureServices(IServiceCollection services)

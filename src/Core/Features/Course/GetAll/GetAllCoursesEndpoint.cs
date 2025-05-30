@@ -6,7 +6,10 @@ using Microsoft.Extensions.Logging;
 namespace Core.Features.Course.GetAll;
 
 [HttpGet("/api/course")]
-public class GetAllCoursesEndpoint(ILogger<GetAllCoursesEndpoint> logger, ApplicationDbContext dbContext) : EndpointWithoutRequest<GetAllCoursesResponse, GetAllCoursesMapper>
+public class GetAllCoursesEndpoint(
+    ILogger<GetAllCoursesEndpoint> logger,
+    ApplicationDbContext dbContext
+) : EndpointWithoutRequest<GetAllCoursesResponse, GetAllCoursesMapper>
 {
     public override async Task HandleAsync(CancellationToken ct)
     {
@@ -14,6 +17,6 @@ public class GetAllCoursesEndpoint(ILogger<GetAllCoursesEndpoint> logger, Applic
 
         var courses = await dbContext.Classrooms.ToListAsync(cancellationToken: ct);
 
-        await SendMappedAsync(courses, ct: ct);
+        await SendMapped(courses, ct: ct);
     }
 }

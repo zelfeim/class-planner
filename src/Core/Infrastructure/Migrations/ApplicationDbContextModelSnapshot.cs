@@ -61,8 +61,8 @@ namespace Core.Infrastructure.Migrations
                     b.Property<int>("LecturerId")
                         .HasColumnType("integer");
 
-                    b.Property<TimeSpan>("Length")
-                        .HasColumnType("interval");
+                    b.Property<long>("Length")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -141,6 +141,11 @@ namespace Core.Infrastructure.Migrations
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 

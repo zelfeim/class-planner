@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Features.Year.GetYearGroups;
 
-[HttpGet("/api/year/{Id:int}/groups")]
+[HttpGet("/api/year/{Id:int}/group")]
 public class GetYearGroupsEndpoint(
     ILogger<GetYearGroupsEndpoint> logger,
     ApplicationDbContext dbContext

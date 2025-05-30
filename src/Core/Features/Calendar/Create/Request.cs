@@ -2,5 +2,5 @@ namespace Core.Features.Calendar.Create;
 
 public record Request
 {
-    public required string YearId { get; init; }
+    public int YearId { get; init; }
 }
