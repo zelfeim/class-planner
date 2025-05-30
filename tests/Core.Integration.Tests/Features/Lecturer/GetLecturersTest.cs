@@ -2,6 +2,7 @@ using Core.Features.Lecturer.GetAll;
 using FastEndpoints;
 using FastEndpoints.Testing;
 using FluentAssertions;
+using Xunit;
 
 namespace Core.Integration.Tests.Features.Lecturer;
 

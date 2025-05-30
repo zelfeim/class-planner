@@ -3,6 +3,7 @@ using Core.Features.Class.GetClasses;
 using FastEndpoints;
 using FastEndpoints.Testing;
 using FluentAssertions;
+using Xunit;
 using Group = Core.Domain.Entity.Group;
 
 namespace Core.Integration.Tests.Features.Classes;
